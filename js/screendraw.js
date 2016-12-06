@@ -25,4 +25,3 @@ function drawObject(x,y,width,height,shape,color){
 prepCanv();
 ctx.fillStyle = "White";
 ctx.fillRect(0,0,$("#canv").attr("width"),$("#canv").attr("height"));
-//drawObject(200,200,30,30,"circ","rgb(0,0,125)");
