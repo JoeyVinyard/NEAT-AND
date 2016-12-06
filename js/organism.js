@@ -30,5 +30,8 @@ var organism = {
 		var n = Object.create(nodeGene);
 		n.type = t;
 		this.nodeGenes.push(n);
-	}
+	},
+
+	x: 0, //for visualizer
+	y: 0 //for visualizer
 }
