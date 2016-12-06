@@ -4,6 +4,7 @@ function summateSynapses(inputSyn){
 		tot+=syn.getWeightedValue();
 	}
 	return tot;
+}
 function sigmoid(){
 	return 1/(1+Math.exp(-1*summateSynapses()));
 }

@@ -15,20 +15,20 @@ var nodeGene = {
 }
 
 var organism = {
-	connGenes: {},
-	nodeGenes: {},
+	connGenes: [],
+	nodeGenes: [],
 
-	function: createNewConn(i,o){
+	createNewConn: function(i,o){
 		var c = Object.create(connGene);
 		c.innovNum=globInnovNum;
 		globInnovNum++;
-		c.in = nodeGenes[i-1];
-		c.out = nodeGenes[i-1];
-		connGenes.push(c);
+		c.in = this.nodeGenes[i-1];
+		c.out = this.nodeGenes[i-1];
+		this.connGenes.push(c);
 	},
-	function: createNewNode(t){
+	createNewNode: function(t){
 		var n = Object.create(nodeGene);
 		n.type = t;
-		nodeGenes.push(n);
+		this.nodeGenes.push(n);
 	}
 }
