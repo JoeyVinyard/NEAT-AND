@@ -2,10 +2,9 @@ var canvas;
 var ctx;
 function prepCanv(){
 	canvas = document.getElementById("canv");
-	$("#canv").attr("width",$(window).width()*.8);
-	$("#canv").attr("height",$(window).height()*.8);
+	$("#canv").attr("width",400);
+	$("#canv").attr("height",400);
 	ctx = canvas.getContext("2d");
-	ctx.transform(1, 0, 0, -1, 0, canvas.height);
 }
 function drawObject(x,y,width,height,shape,color){
 	ctx.fillStyle = color;
@@ -24,4 +23,6 @@ function drawObject(x,y,width,height,shape,color){
 	}
 }
 prepCanv();
+ctx.fillStyle = "White";
+ctx.fillRect(0,0,$("#canv").attr("width"),$("#canv").attr("height"));
 //drawObject(200,200,30,30,"circ","rgb(0,0,125)");
