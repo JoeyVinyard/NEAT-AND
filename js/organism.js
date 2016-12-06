@@ -1,7 +1,5 @@
 var globInnovNum = 1;
 
-var genes = {};
-
 var connGene = {
 	innovNum: 0,
 	in: null,
@@ -17,6 +15,9 @@ var nodeGene = {
 var organism = {
 	connGenes: [],
 	nodeGenes: [],
+	numInputs: 0,
+	numHidden: 0,
+	numOutputs: 0,
 
 	createNewConn: function(i,o){
 		var c = Object.create(connGene);
@@ -28,6 +29,13 @@ var organism = {
 	},
 	createNewNode: function(t){
 		var n = Object.create(nodeGene);
+		if(t=="hidden"){
+			this.numHidden++;
+		}else if(t=="input"){
+			this.numInputs++;
+		}else if(t=="output"){
+			this.numOutputs++;
+		}
 		n.type = t;
 		this.nodeGenes.push(n);
 	},
