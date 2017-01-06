@@ -1,4 +1,5 @@
 var org = Object.create(organism);
+org.init();
 org.createNewNode("input");
 org.createNewNode("input");
 org.createNewNode("hidden");
@@ -10,6 +11,8 @@ org.createNewConn(1,3);
 org.createNewConn(3,6);
 org.createNewConn(3,4);
 org.createNewConn(4,5);
+org.createNewConn(2,3);
+org.createNewConn(5,6);
 
 function drawOrg(o){
 	var inNodes = [340];
@@ -68,7 +71,18 @@ function drawOrg(o){
 	});
 	o.nodeGenes.forEach(function(n){
 		drawNode(n.x,n.y);
+		ctx.fillStyle = "White";
+		ctx.font = "12px Arial";
+		ctx.fillText(n.id,n.x-3,n.y+4);
+		ctx.fillStyle = "Black";
 	});
 }
+function displaySigTot(tot,x,y){
+	ctx.fillStyle = "rgb(125,125,125)";
+	ctx.font = "12px Arial";
+	ctx.fillText(tot,x-10,y-15);
+	ctx.fillStyle = "Black";
+}
 drawOrg(org);
-console.log(org);
+org.giveInputs([0.89,0.12]);
+console.log(org.nodeGenes[5].getSigmoid());

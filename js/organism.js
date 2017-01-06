@@ -8,7 +8,7 @@ var connGene = {
 	enabled: true,
 
 	genRandWeight: function(){
-		this.weight = Math.floor(Math.random()*10000)/100;
+		this.weight = Math.floor(Math.random()*100)/100;
 	},
 	getWeightedValue: function(){
 		return this.in.getSigmoid()*this.weight;
@@ -16,7 +16,8 @@ var connGene = {
 }
 
 var nodeGene = {
-	type: "hidden",//sensor,hidden,output
+	type: "hidden",//input,hidden,output
+	id: 0,
 	x: 0,
 	y: 0,
 	inputs: null,
@@ -26,23 +27,38 @@ var nodeGene = {
 	assignPos: function(x,y){
 		this.x=x;
 		this.y=y;
+	},
+	getSigmoid: function(){
+		if(this.type == "input"){
+			displaySigTot(this.inputs[0],this.x,this.y);
+			return this.inputs[0];
+		}
+		var sum = 0;
+		this.inputs.forEach(function(i){
+			sum+=i.getWeightedValue();
+		});
+		var tot = Math.floor((1/(1+Math.exp(-1*sum)))*1000)/1000;//Calculates Sigmoid and cuts off at 3 decimals
+		displaySigTot(tot,this.x,this.y);
+		return tot;
 	}
 }
 
 var organism = {
-	connGenes: [],
-	nodeGenes: [],
-	numInputs: 0,
-	numHidden: 0,
-	numOutputs: 0,
+	connGenes: null,
+	nodeGenes: null,
+	inputNodes: null,
 
+	init: function(){
+		this.connGenes=[];
+		this.nodeGenes=[];
+		this.inputNodes=[];
+	},
 	createNewConn: function(i,o){
 		var c = Object.create(connGene);
 		c.innovNum=globInnovNum;
 		globInnovNum++;
 		c.in = this.nodeGenes[i-1];
 		c.out = this.nodeGenes[o-1];
-		c.out.createInputs();
 		c.out.inputs.push(c);
 		c.genRandWeight();
 		console.log(c.weight);
@@ -50,22 +66,17 @@ var organism = {
 	},
 	createNewNode: function(t){
 		var n = Object.create(nodeGene);
-		switch(t){
-			case "input":
-				this.numInputs++;
-				break;
-			case "hidden":
-				this.numHidden++;
-				break;
-			case "output":
-				this.numOutputs++;
-				break;
-			default:
-				throwErrorMessage("Node Creation","No type recognized");
-				t = "hidden";
-				break;
-		}
 		n.type = t;
+		n.id = this.nodeGenes.length+1;
+		n.createInputs();
 		this.nodeGenes.push(n);
+		if(t=="input"){
+			this.inputNodes.push(n);
+		}
 	},
+	giveInputs: function(sensors){
+		for(var i=0;i<this.inputNodes.length;i++){
+			this.inputNodes[i].inputs.push(sensors[i]);
+		}
+	}
 }
