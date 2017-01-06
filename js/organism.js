@@ -4,8 +4,15 @@ var connGene = {
 	innovNum: 0,
 	in: null,
 	out: null,
-	weight: 0.5,
-	enabled: true
+	weight: 5,
+	enabled: true,
+
+	genRandWeight: function(){
+		this.weight = Math.floor(Math.random()*10000)/100;
+	},
+	getWeightedValue: function(){
+		return this.in.getSigmoid()*this.weight;
+	}
 }
 
 var nodeGene = {
@@ -37,7 +44,8 @@ var organism = {
 		c.out = this.nodeGenes[o-1];
 		c.out.createInputs();
 		c.out.inputs.push(c);
-		console.log(c.out);
+		c.genRandWeight();
+		console.log(c.weight);
 		this.connGenes.push(c);
 	},
 	createNewNode: function(t){

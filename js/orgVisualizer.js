@@ -60,6 +60,11 @@ function drawOrg(o){
 		ctx.moveTo(c.in.x,c.in.y);
 		ctx.lineTo(c.out.x,c.out.y);
 		ctx.stroke();
+
+		ctx.fillStyle = "rgb(255,0,255)";
+		ctx.font = "12px Arial";
+		ctx.fillText(c.weight,(c.in.x+c.out.x)/2,(c.in.y+c.out.y)/2);
+		ctx.fillStyle = "Black";
 	});
 	o.nodeGenes.forEach(function(n){
 		drawNode(n.x,n.y);
