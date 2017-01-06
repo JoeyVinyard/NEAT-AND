@@ -10,6 +10,12 @@ var connGene = {
 
 var nodeGene = {
 	type: "hidden",//sensor,hidden,output
+	x: 0,
+	y: 0,
+	assignPos: function(x,y){
+		this.x=x;
+		this.y=y;
+	}
 }
 
 var organism = {
@@ -24,7 +30,7 @@ var organism = {
 		c.innovNum=globInnovNum;
 		globInnovNum++;
 		c.in = this.nodeGenes[i-1];
-		c.out = this.nodeGenes[i-1];
+		c.out = this.nodeGenes[o-1];
 		this.connGenes.push(c);
 	},
 	createNewNode: function(t){
