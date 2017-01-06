@@ -66,3 +66,4 @@ function drawOrg(o){
 	});
 }
 drawOrg(org);
+console.log(org);
