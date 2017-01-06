@@ -84,5 +84,5 @@ function displaySigTot(tot,x,y){
 	ctx.fillStyle = "Black";
 }
 drawOrg(org);
-org.giveInputs([0.89,0.12]);
+org.giveInputs([0,1]);
 console.log(org.nodeGenes[5].getSigmoid());

@@ -8,7 +8,7 @@ var connGene = {
 	enabled: true,
 
 	genRandWeight: function(){
-		this.weight = Math.floor(Math.random()*100)/100;
+		this.weight = Math.floor((Math.random()*(1-(-1))+(-1))*100)/100;
 	},
 	getWeightedValue: function(){
 		return this.in.getSigmoid()*this.weight;
