@@ -12,6 +12,7 @@ var nodeGene = {
 	type: "hidden",//sensor,hidden,output
 	x: 0,
 	y: 0,
+	inputs: [],
 	assignPos: function(x,y){
 		this.x=x;
 		this.y=y;
@@ -31,6 +32,7 @@ var organism = {
 		globInnovNum++;
 		c.in = this.nodeGenes[i-1];
 		c.out = this.nodeGenes[o-1];
+		c.out.inputs.push(c);
 		this.connGenes.push(c);
 	},
 	createNewNode: function(t){
