@@ -1,27 +1,17 @@
 var canvas;
 var ctx;
+var cvW = 400;
+var cvH = 400;
 function prepCanv(){
 	canvas = document.getElementById("canv");
-	$("#canv").attr("width",400);
-	$("#canv").attr("height",400);
+	$("#canv").attr("width",cvW);
+	$("#canv").attr("height",cvH);
 	ctx = canvas.getContext("2d");
 }
-function drawObject(x,y,width,height,shape,color){
-	ctx.fillStyle = color;
-	switch(shape){
-		case "rect":
-			ctx.fillRect(x,y,width,height);
-		break;
-		case "circ":
-			ctx.beginPath();
-			ctx.arc(x+width/2,y+height/2,width/2,0,Math.PI*2);
-			ctx.fill();
-			ctx.closePath();
-		break;
-		default:
-			ctx.fillRect(x,y,width,height);
-	}
+function drawNode(x,y){
+	ctx.fillStyle = "Black";
+	ctx.fillRect(x-10,y-10,20,20);
 }
 prepCanv();
 ctx.fillStyle = "White";
-ctx.fillRect(0,0,$("#canv").attr("width"),$("#canv").attr("height"));
+ctx.fillRect(0,0,cvW,cvH);

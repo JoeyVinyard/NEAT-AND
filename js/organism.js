@@ -29,17 +29,22 @@ var organism = {
 	},
 	createNewNode: function(t){
 		var n = Object.create(nodeGene);
-		if(t=="hidden"){
-			this.numHidden++;
-		}else if(t=="input"){
-			this.numInputs++;
-		}else if(t=="output"){
-			this.numOutputs++;
+		switch(t){
+			case "input":
+				this.numInputs++;
+				break;
+			case "hidden":
+				this.numHidden++;
+				break;
+			case "output":
+				this.numOutputs++;
+				break;
+			default:
+				throwErrorMessage("Node Creation","No type recognized");
+				t = "hidden";
+				break;
 		}
 		n.type = t;
 		this.nodeGenes.push(n);
 	},
-
-	x: 0, //for visualizer
-	y: 0 //for visualizer
 }
