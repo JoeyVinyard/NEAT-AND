@@ -1,18 +1,6 @@
 var org = Object.create(organism);
 org.init();
-org.createNewNode("input");
-org.createNewNode("input");
-org.createNewNode("hidden");
-org.createNewNode("hidden");
-org.createNewNode("hidden");
-org.createNewNode("output");
-
-org.createNewConn(1,3);
-org.createNewConn(3,6);
-org.createNewConn(3,4);
-org.createNewConn(4,5);
-org.createNewConn(2,3);
-org.createNewConn(5,6);
+org.createBlank(2,1);
 
 function drawOrg(o){
 	var inNodes = [340];

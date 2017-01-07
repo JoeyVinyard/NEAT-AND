@@ -76,6 +76,9 @@ var organism = {
 			this.output = n;
 		}
 	},
+	runMutations: function(){
+		
+	},
 	giveInputs: function(sensors){
 		for(var i=0;i<this.inputNodes.length;i++){
 			this.inputNodes[i].inputs.push(sensors[i]);
@@ -86,5 +89,13 @@ var organism = {
 		var output = this.giveInputs(sensors);
 		console.log(expected,output);
 		return Math.abs(expected-output);
+	},
+	createBlank: function(numInputs, numOutputs){
+		for(var i=0;i<numInputs;i++){
+			this.createNewNode("input");
+		}
+		for(var i=0;i<numOutputs;i++){
+			this.createNewNode("output");
+		}
 	}
 }
