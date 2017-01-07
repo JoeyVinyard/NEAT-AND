@@ -8,7 +8,7 @@ var connGene = {
 	enabled: true,
 
 	genRandWeight: function(){
-		this.weight = Math.floor((Math.random()*(1-(-1))+(-1))*100)/100;
+		this.weight = Math.floor((Math.random()*(2)+(-1))*100)/100;
 	},
 	getWeightedValue: function(){
 		return this.in.getSigmoid()*this.weight;
@@ -47,6 +47,7 @@ var organism = {
 	connGenes: null,
 	nodeGenes: null,
 	inputNodes: null,
+	output: null,
 
 	init: function(){
 		this.connGenes=[];
@@ -61,7 +62,6 @@ var organism = {
 		c.out = this.nodeGenes[o-1];
 		c.out.inputs.push(c);
 		c.genRandWeight();
-		console.log(c.weight);
 		this.connGenes.push(c);
 	},
 	createNewNode: function(t){
@@ -72,11 +72,19 @@ var organism = {
 		this.nodeGenes.push(n);
 		if(t=="input"){
 			this.inputNodes.push(n);
+		}else if(t=="output"){
+			this.output = n;
 		}
 	},
 	giveInputs: function(sensors){
 		for(var i=0;i<this.inputNodes.length;i++){
 			this.inputNodes[i].inputs.push(sensors[i]);
 		}
+		return this.output.getSigmoid();
+	},
+	testOrganism: function(sensors, expected){
+		var output = this.giveInputs(sensors);
+		console.log(expected,output);
+		return Math.abs(expected-output);
 	}
 }
