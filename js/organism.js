@@ -5,7 +5,7 @@ var connGene = {
 	in: null,
 	out: null,
 	weight: 5,
-	enabled: true,
+	disabled: false,
 
 	genRandWeight: function(){
 		this.weight = Math.floor((Math.random()*(2)+(-1))*100)/100;
@@ -35,7 +35,9 @@ var nodeGene = {
 		}
 		var sum = 0;
 		this.inputs.forEach(function(i){
-			sum+=i.getWeightedValue();
+			if(!i.disabled){
+				sum+=i.getWeightedValue();
+			}
 		});
 		var tot = Math.floor((1/(1+Math.exp(-1*sum)))*1000)/1000;//Calculates Sigmoid and cuts off at 3 decimals
 		displaySigTot(tot,this.x,this.y);
@@ -46,15 +48,23 @@ var nodeGene = {
 var organism = {
 	connGenes: null,
 	nodeGenes: null,
-	inputNodes: null,
-	output: null,
+	inputs: null,
+	hiddens: null,
+	outputs: null,
 
 	init: function(){
 		this.connGenes=[];
 		this.nodeGenes=[];
-		this.inputNodes=[];
+		this.inputs=[];
+		this.hiddens=[];
+		this.outputs=[];
 	},
 	createNewConn: function(i,o){
+		this.nodeGenes[o-1].inputs.forEach(function(n){
+			if(n.in.id==i){
+				return;
+			}
+		});
 		var c = Object.create(connGene);
 		c.innovNum=globInnovNum;
 		globInnovNum++;
@@ -63,8 +73,8 @@ var organism = {
 		c.out.inputs.push(c);
 		c.genRandWeight();
 		this.connGenes.push(c);
-		console.log(this.connGenes);
 	},
+	//@TODO: Make sure that the anti duplicate works
 	createNewNode: function(t){
 		var n = Object.create(nodeGene);
 		n.type = t;
@@ -72,10 +82,37 @@ var organism = {
 		n.createInputs();
 		this.nodeGenes.push(n);
 		if(t=="input"){
-			this.inputNodes.push(n);
+			this.inputs.push(n);
+		}else if(t=="hidden"){
+			this.hiddens.push(n);
 		}else if(t=="output"){
-			this.output = n;
+			this.outputs.push(n);
 		}
+	},
+	generateNewConn: function(){
+		var input;
+		var output;
+		if(Math.random()>=.5){
+			input = this.inputs[Math.floor(Math.random()*this.inputs.length)];
+		}else{
+			input = this.hiddens[Math.floor(Math.random()*this.hiddens.length)];
+		}
+		if(Math.random()>=.5){
+			output = this.outputs[Math.floor(Math.random()*this.outputs.length)];
+		}else{
+			output = this.hiddens[Math.floor(Math.random()*this.hiddens.length)];
+		}
+		if(input==undefined||output==undefined){
+			return;
+		}
+		this.createNewConn(input.id,output.id);
+	},
+	generateNewNode: function(){
+		var c = this.connGenes[Math.floor(Math.random()*this.connGenes.length)];
+		this.createNewNode("hidden");
+		c.disabled=true;
+		this.createNewConn(c.in.id,this.hiddens[this.hiddens.length-1].id);
+		this.createNewConn(this.hiddens[this.hiddens.length-1].id,c.out.id);
 	},
 	runMutations: function(t){
 		var r = Math.floor(Math.random()*100)/100;
@@ -95,17 +132,25 @@ var organism = {
 				});
 			}
 		}
+		if(r<=.05){
+			console.log("new conn");
+			this.generateNewConn();
+		}
+		if(r<=.03){
+			console.log("new node");
+			this.generateNewNode();
+		}
 	},
 	giveInputs: function(sensors){
-		for(var i=0;i<this.inputNodes.length;i++){
-			this.inputNodes[i].inputs.push(sensors[i]);
+		for(var i=0;i<this.inputs.length;i++){
+			this.inputs[i].inputs.push(sensors[i]);
 		}
 		return this.output.getSigmoid();
 	},
-	testOrganism: function(sensors, expected){
+	calcFitness: function(sensors, expected){
 		var output = this.giveInputs(sensors);
 		console.log(expected,output);
-		return Math.abs(expected-output);
+		return 1/Math.abs(expected-output);
 	},
 	createBlank: function(numInputs, numOutputs){
 		for(var i=0;i<numInputs;i++){

@@ -49,10 +49,17 @@ function drawOrg(o){
 	});
 	//draw synapses
 	o.connGenes.forEach(function(c){
+		console.log(c);
 		ctx.beginPath();
+		ctx.lineWidth = 3;
 		ctx.moveTo(c.in.x,c.in.y);
 		ctx.lineTo(c.out.x,c.out.y);
+		if(c.disabled){
+			console.log("disabled");
+			ctx.strokeStyle="rgb(170,170,170)";
+		}
 		ctx.stroke();
+		ctx.strokeStyle="Black";
 
 		ctx.fillStyle = "rgb(255,0,255)";
 		ctx.font = "12px Arial";
@@ -74,6 +81,5 @@ function displaySigTot(tot,x,y){
 	ctx.fillStyle = "Black";
 }
 drawOrg(org);
-console.log(org.testOrganism([0,1],1));
 org.runMutations();
 drawOrg(org);
