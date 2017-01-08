@@ -1,8 +1,10 @@
 var org = Object.create(organism);
 org.init();
 org.createBlank(2,1);
+org.createNewConn(1,3);
 
 function drawOrg(o){
+	clear();
 	var inNodes = [340];
 	var hdNodes = [200];
 	var otNodes = [60];
@@ -73,3 +75,5 @@ function displaySigTot(tot,x,y){
 }
 drawOrg(org);
 console.log(org.testOrganism([0,1],1));
+org.runMutations();
+drawOrg(org);

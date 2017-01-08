@@ -63,6 +63,7 @@ var organism = {
 		c.out.inputs.push(c);
 		c.genRandWeight();
 		this.connGenes.push(c);
+		console.log(this.connGenes);
 	},
 	createNewNode: function(t){
 		var n = Object.create(nodeGene);
@@ -76,8 +77,24 @@ var organism = {
 			this.output = n;
 		}
 	},
-	runMutations: function(){
-		
+	runMutations: function(t){
+		var r = Math.floor(Math.random()*100)/100;
+		if(r<.8){
+			if(Math.random()<.1){
+				console.log("Randomizing");
+				this.connGenes.forEach(function(c){
+					console.log(c.weight);
+					c.genRandWeight();
+				});
+			}else{
+				console.log("Perturbing");
+				var modifier = Math.floor(((Math.random()*(.06))+.97)*100)/100
+				this.connGenes.forEach(function(c){
+					console.log(c.weight);
+					c.weight=Math.floor(c.weight*modifier*100)/100;
+				});
+			}
+		}
 	},
 	giveInputs: function(sensors){
 		for(var i=0;i<this.inputNodes.length;i++){

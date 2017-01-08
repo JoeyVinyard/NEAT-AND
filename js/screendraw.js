@@ -12,6 +12,9 @@ function drawNode(x,y){
 	ctx.fillStyle = "Black";
 	ctx.fillRect(x-10,y-10,20,20);
 }
+function clear(){
+	ctx.fillStyle = "White";
+	ctx.fillRect(0,0,cvW,cvH);
+}
 prepCanv();
-ctx.fillStyle = "White";
-ctx.fillRect(0,0,cvW,cvH);
+clear();
