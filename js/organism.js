@@ -51,6 +51,7 @@ var organism = {
 	inputs: null,
 	hiddens: null,
 	outputs: null,
+	fitness: 0,
 
 	init: function(){
 		this.connGenes=[];
@@ -150,7 +151,8 @@ var organism = {
 	calcFitness: function(sensors, expected){
 		var output = this.giveInputs(sensors);
 		console.log(expected,output);
-		return 1/Math.abs(expected-output);
+		this.fitness = 1/Math.abs(expected-output);
+		return this.fitness;
 	},
 	createBlank: function(numInputs, numOutputs){
 		for(var i=0;i<numInputs;i++){
