@@ -67,8 +67,8 @@ var organism = {
 			}
 		});
 		var c = Object.create(connGene);
-		c.innovNum=globInnovNum;
-		globInnovNum++;
+		console.log("Increasing inno");
+		c.innovNum=globInnovNum++;
 		c.in = this.nodeGenes[i-1];
 		c.out = this.nodeGenes[o-1];
 		c.out.inputs.push(c);
