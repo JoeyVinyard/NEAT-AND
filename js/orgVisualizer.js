@@ -4,8 +4,9 @@ spec.init();
 for(var i = 0; i < 5; i++){
 	var org = Object.create(organism);
 	org.init();
-	org.createBlank();
-	species.push(org);
+	org.createBlank(2,1);
+	org.createNewConn(1,3);
+	spec.genomes.push(org);
 }
 
 function drawOrg(o){

@@ -1,4 +1,4 @@
-var species = [];
+var specs = [];
 
 var compThresh = 3;
 

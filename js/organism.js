@@ -142,11 +142,12 @@ var organism = {
 			this.generateNewNode();
 		}
 	},
+	//Needs to be rewritten for broader application
 	giveInputs: function(sensors){
 		for(var i=0;i<this.inputs.length;i++){
 			this.inputs[i].inputs.push(sensors[i]);
 		}
-		return this.output.getSigmoid();
+		return this.outputs[0].getSigmoid();
 	},
 	calcFitness: function(sensors, expected){
 		var output = this.giveInputs(sensors);
