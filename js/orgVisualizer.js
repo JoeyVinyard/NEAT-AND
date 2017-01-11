@@ -1,13 +1,19 @@
 var spec = Object.create(species);
 console.log(spec);
 spec.init();
-for(var i = 0; i < 5; i++){
-	var org = Object.create(organism);
-	org.init();
-	org.createBlank(2,1);
-	org.createNewConn(1,3);
-	spec.genomes.push(org);
-}
+var org = Object.create(organism);
+org.init();
+org.createBlank(2,1);
+org.createNewConn(1,3);
+var orgTwo = Object.create(organism);
+orgTwo.init();
+orgTwo.createBlank(2,1);
+orgTwo.createNewConn(1,3);
+orgTwo.connGenes[0].innovNum=1
+orgTwo.createNewConn(2,3);
+console.log(org,orgTwo);
+calcCompatibility(org,orgTwo);
+
 
 function drawOrg(o){
 	clear();
@@ -86,5 +92,3 @@ function displaySigTot(tot,x,y){
 	ctx.fillText(tot,x-10,y-15);
 	ctx.fillStyle = "Black";
 }
-console.log(spec);
-console.log(spec.calcTotalFitness());
