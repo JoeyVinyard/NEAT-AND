@@ -27,9 +27,9 @@ function speciate(genomes){
 function calcCompatibility(g,s){
 	var ex = getNumExcess(g,s);
 	var ds = getNumDisjoint(g,s);
-	console.log(ex,ds);
+	var w = getWeightDiff(g,s);
+	console.log(w);
 }
-//Need to make sure this works
 function getNumExcess(g,s){
 	var larger = g;
 	var max = s.connGenes[s.connGenes.length-1].innovNum;
@@ -40,7 +40,6 @@ function getNumExcess(g,s){
 	var numEx = larger.connGenes.length-larger.connGenes.findIndex(function(x){return x.innovNum>max});
 	return numEx;
 }
-//Need to make sure this works
 function getNumDisjoint(g,s){
 	var numDis=0;
 	var larger = g.innovNums;
@@ -59,4 +58,22 @@ function getNumDisjoint(g,s){
 			numDis++;
 	}
 	return numDis;
+}
+function getWeightDiff(g,s){
+	var a = g.innovNums;
+	var b = s.innovNums;
+	var numMatching = 0;
+	var totDif = 0;
+	var match = 0;
+	console.log(a,b);
+	for(var i=0;i<a.length;i++){
+		match = b.findIndex(function(n){return n==a[i]});
+		console.log(match);
+		if(match!=-1){
+			numMatching++;
+			totDif+=Math.abs(Math.abs(g.connGenes[i].weight)-Math.abs(s.connGenes[match].weight));
+		}
+	}
+	console.log(totDif,numMatching);
+	return totDif/numMatching;
 }
