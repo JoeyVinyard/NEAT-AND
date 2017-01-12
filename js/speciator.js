@@ -25,10 +25,15 @@ function speciate(genomes){
 	});
 }
 function calcCompatibility(g,s){
+	var n = 1;
+	if(g.nodeGenes.length>sizeThresh)
+		n=g.nodeGenes.length;
 	var ex = getNumExcess(g,s);
 	var ds = getNumDisjoint(g,s);
 	var w = getWeightDiff(g,s);
-	console.log(w);
+	var delta = (eCo*(ex/n))+(dCo*(ds/n))+(wCo*w);
+	console.log(delta);
+	return delta;
 }
 function getNumExcess(g,s){
 	var larger = g;
