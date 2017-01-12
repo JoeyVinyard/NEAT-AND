@@ -31,32 +31,31 @@ function calcCompatibility(g,s){
 }
 //Need to make sure this works
 function getNumExcess(g,s){
-	var larger = g
+	var larger = g;
 	var max = s.connGenes[s.connGenes.length-1].innovNum;
-	if(max<s.connGenes[s.connGenes.length-1].innovNum){
+	if(max>g.connGenes[g.connGenes.length-1].innovNum){
 		larger = s;
 		max = g.connGenes[g.connGenes.length-1].innovNum;
-		console.log("yo",max);
 	}
-	console.log(larger);
-	console.log(larger.connGenes.findIndex(function(x){
-		console.log("h",x.innovNum,max);
-		return x.innovNum>max;
-	}));
-	var numEx = larger.length-larger.connGenes.findIndex(function(x){x.innovNum>max});
+	var numEx = larger.connGenes.length-larger.connGenes.findIndex(function(x){return x.innovNum>max});
 	return numEx;
 }
 //Need to make sure this works
 function getNumDisjoint(g,s){
 	var numDis=0;
-	var larger = g
-	var max = g.connGenes[g.connGenes.length-1].innovNum;
-	if(max>s.connGenes[s.connGenes.length-1].innovNum){
-		larger = s;
-		max = s.connGenes[s.connGenes.length-1].innovNum;
+	var larger = g.innovNums;
+	var smaller = s.innovNums;
+	if(smaller.length>larger.length){
+		larger = s.innovNums;
+		smaller = g.innovNums;
 	}
+	var max = smaller[smaller.length-1];
 	for(var i=0;larger[i]<=max;i++){
-		if(!g.includes(s[i])||!s.includes(g[i]))
+		if(!smaller.includes(larger[i]))
+			numDis++;
+	}
+	for(var i=0;i<smaller.length;i++){
+		if(!larger.includes(smaller[i]))
 			numDis++;
 	}
 	return numDis;

@@ -48,6 +48,7 @@ var nodeGene = {
 var organism = {
 	connGenes: null,
 	nodeGenes: null,
+	innovNums: [],
 	inputs: null,
 	hiddens: null,
 	outputs: null,
@@ -56,6 +57,7 @@ var organism = {
 	init: function(){
 		this.connGenes=[];
 		this.nodeGenes=[];
+		this.innovNums=[];
 		this.inputs=[];
 		this.hiddens=[];
 		this.outputs=[];
@@ -67,12 +69,12 @@ var organism = {
 			}
 		});
 		var c = Object.create(connGene);
-		console.log("Increasing inno");
-		c.innovNum=globInnovNum++;
+		c.innovNum=globInnovNum;//Make sure to add back incrementing
 		c.in = this.nodeGenes[i-1];
 		c.out = this.nodeGenes[o-1];
 		c.out.inputs.push(c);
 		c.genRandWeight();
+//		this.innovNums.push(c.innovNum);
 		this.connGenes.push(c);
 	},
 	//@TODO: Make sure that the anti duplicate works
