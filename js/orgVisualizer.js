@@ -29,7 +29,7 @@ orgTwo.innovNums.push(1);
 orgTwo.connGenes[1].innovNum=5;
 orgTwo.innovNums.push(5);
 
-calcCompatibility(org,orgTwo);
+console.log(calcCompatibility(org,orgTwo));
 
 function drawOrg(o){
 	clear();

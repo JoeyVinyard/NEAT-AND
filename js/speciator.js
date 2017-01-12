@@ -9,19 +9,28 @@ var wCo = 0.4;
 
 function speciate(genomes){
 	genomes.forEach(function(g){
+		var found = false;
 		if(specs.length==0){
 			specs.push(Object.create(species));
+			specs[specs.length-1].init();
 		}
 		specs.forEach(function(s){
 			if(s.repGenome == null){
 				s.genomes.push(g);
+				found = true;
 				break;
 			}
 			else if(calcCompatibility(g,s.repGenome)){
 				s.genomes.push(g);
+				found = true;
 				break;
 			}
 		});
+		if(!found){
+			specs.push(Object.create(species));
+			specs[specs.length-1].init();
+			specs[specs.length-1].genomes.push(g);
+		}
 	});
 }
 function calcCompatibility(g,s){

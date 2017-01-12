@@ -18,5 +18,8 @@ var species = {
 		});
 		console.log(this.genomes);
 		return sum/this.genomes.length;
+	},
+	chooseRandGenome: function(){
+		this.repGenome = this.genomes[Math.floor(Math.random()*this.genomes.length)];
 	}
 }
