@@ -16,8 +16,8 @@ org.connGenes[1].innovNum = 3;
 org.innovNums.push(3);
 org.connGenes[2].innovNum = 4;
 org.innovNums.push(4);
-org.connGenes[3].innovNum = 6;
-org.innovNums.push(6);
+org.connGenes[3].innovNum = 5;
+org.innovNums.push(5);
 
 var orgTwo = Object.create(organism);
 orgTwo.init();

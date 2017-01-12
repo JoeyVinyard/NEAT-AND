@@ -32,17 +32,18 @@ function calcCompatibility(g,s){
 	var ds = getNumDisjoint(g,s);
 	var w = getWeightDiff(g,s);
 	var delta = (eCo*(ex/n))+(dCo*(ds/n))+(wCo*w);
-	console.log(delta);
-	return delta;
+	console.log(ex,ds,w,delta);
+	return delta<compThresh;;
 }
 function getNumExcess(g,s){
-	var larger = g;
-	var max = s.connGenes[s.connGenes.length-1].innovNum;
-	if(max>g.connGenes[g.connGenes.length-1].innovNum){
-		larger = s;
-		max = g.connGenes[g.connGenes.length-1].innovNum;
+	var larger = g.innovNums;
+	var max = s.innovNums[s.innovNums.length-1]
+	if(max>g.innovNums[g.innovNums.length-1]){
+		larger = s.innovNums;
+		max = g.innovNums[g.innovNums.length-1];
 	}
-	var numEx = larger.connGenes.length-larger.connGenes.findIndex(function(x){return x.innovNum>max});
+	console.log(larger,max);
+	var numEx = larger.length-1-larger.findIndex(function(n){return n>=max});
 	return numEx;
 }
 function getNumDisjoint(g,s){
