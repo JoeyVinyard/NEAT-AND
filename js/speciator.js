@@ -15,15 +15,17 @@ function speciate(genomes){
 			specs[specs.length-1].init();
 		}
 		specs.forEach(function(s){
-			if(s.repGenome == null){
-				s.genomes.push(g);
-				found = true;
-				break;
-			}
-			else if(calcCompatibility(g,s.repGenome)){
-				s.genomes.push(g);
-				found = true;
-				break;
+			if(!found){
+				if(s.repGenome == null){
+					s.genomes.push(g);
+					s.repGenome=g;
+					found = true;
+				}
+				else if(calcCompatibility(g,s.repGenome)){
+					console.log("compatible");
+					s.genomes.push(g);
+					found = true;
+				}
 			}
 		});
 		if(!found){
@@ -34,6 +36,8 @@ function speciate(genomes){
 	});
 }
 function calcCompatibility(g,s){
+	if(g.connGenes.length==0&&s.connGenes.length==0)
+		return true;
 	var n = 1;
 	if(g.nodeGenes.length>sizeThresh)
 		n=g.nodeGenes.length;
