@@ -1,5 +1,4 @@
 var generation = [];
-
 for(var i = 0; i < 20; i++){
 	var org = Object.create(organism);
 	org.init();
@@ -8,6 +7,30 @@ for(var i = 0; i < 20; i++){
 }
 speciate(generation);
 console.log(specs);
+specs.forEach(function(s){
+	console.log(s.calcTotalFitness());
+});
+
+
+
+var it = 0;
+$("#left").click(function(){
+	if(--it<0)
+		it=generation.length-1;
+	drawOrg(generation[it]);
+	console.log(specs[generation[it].species-1])
+	$("#org").text("Species: " + generation[it].species + " | Organism: " + specs[generation[it].species-1].genomes.indexOf(generation[it]));
+});
+$("#right").click(function(){
+	if(++it>generation.length)
+		it=0;
+	drawOrg(generation[it]);
+	console.log(specs[generation[it].species-1])
+	$("#org").text("Species: " + generation[it].species + " | Organism: " + specs[generation[it].species-1].genomes.indexOf(generation[it]));
+});
+
+
+
 // var org = Object.create(organism);
 // org.init();
 // org.createBlank(2,1);

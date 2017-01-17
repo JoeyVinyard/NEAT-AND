@@ -19,11 +19,13 @@ function speciate(genomes){
 				if(s.repGenome == null){
 					s.genomes.push(g);
 					s.repGenome=g;
+					g.species = 1;
 					found = true;
 				}
 				else if(calcCompatibility(g,s.repGenome)){
 					console.log("compatible");
 					s.genomes.push(g);
+					g.species = specs.indexOf(s)+1;
 					found = true;
 				}
 			}
@@ -32,6 +34,7 @@ function speciate(genomes){
 			specs.push(Object.create(species));
 			specs[specs.length-1].init();
 			specs[specs.length-1].genomes.push(g);
+			g.species = specs.length;
 		}
 	});
 }

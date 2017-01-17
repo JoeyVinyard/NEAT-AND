@@ -5,6 +5,7 @@ var connGene = {
 	in: null,
 	out: null,
 	weight: 5,
+	species: 0,
 	disabled: false,
 
 	genRandWeight: function(){
