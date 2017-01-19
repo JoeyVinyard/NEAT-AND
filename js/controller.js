@@ -11,8 +11,6 @@ specs.forEach(function(s){
 	console.log(s.calcTotalFitness());
 });
 
-
-
 var it = 0;
 $("#left").click(function(){
 	if(--it<0)

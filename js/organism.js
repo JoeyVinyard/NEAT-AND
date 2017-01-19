@@ -64,27 +64,41 @@ var organism = {
 		this.outputs=[];
 	},
 	createNewConn: function(i,o){
-		this.nodeGenes[o-1].inputs.forEach(function(n){
-			if(n.in.id==i){
-				return;
-			}
-		});
+		console.log(this.nodeGenes);
+		if(this.nodeGenes[i-1]==undefined){
+			console.log("The input was not there");
+			this.createNewNode(i,"hidden");
+		}
+		if(this.nodeGenes[o-1]==undefined){
+			console.log("The output wasn't there");
+			this.createNewNode(o,"hidden");
+		}
+		else{
+			this.nodeGenes[o-1].inputs.forEach(function(n){
+				if(n.in.id==i){
+					return;
+				}
+			});
+		}
 		var c = Object.create(connGene);
-		c.innovNum=globInnovNum;//Make sure to add back incrementing
+		c.innovNum=globInnovNum++;
 		c.in = this.nodeGenes[i-1];
 		c.out = this.nodeGenes[o-1];
 		c.out.inputs.push(c);
 		c.genRandWeight();
-//		this.innovNums.push(c.innovNum);
+		this.innovNums.push(c.innovNum);
 		this.connGenes.push(c);
 	},
 	//@TODO: Make sure that the anti duplicate works
-	createNewNode: function(t){
+	createNewNodeByType(t){
+		this.createNewNode(this.nodeGenes.length+1,t);
+	},
+	createNewNode: function(i,t){
 		var n = Object.create(nodeGene);
 		n.type = t;
 		n.id = this.nodeGenes.length+1;
 		n.createInputs();
-		this.nodeGenes.push(n);
+		this.nodeGenes[i-1]=n;
 		if(t=="input"){
 			this.inputs.push(n);
 		}else if(t=="hidden"){
@@ -160,10 +174,10 @@ var organism = {
 	},
 	createBlank: function(numInputs, numOutputs){
 		for(var i=0;i<numInputs;i++){
-			this.createNewNode("input");
+			this.createNewNodeByType("input");
 		}
 		for(var i=0;i<numOutputs;i++){
-			this.createNewNode("output");
+			this.createNewNodeByType("output");
 		}
 	}
 }

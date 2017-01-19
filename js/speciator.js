@@ -48,7 +48,6 @@ function calcCompatibility(g,s){
 	var ds = getNumDisjoint(g,s);
 	var w = getWeightDiff(g,s);
 	var delta = (eCo*(ex/n))+(dCo*(ds/n))+(wCo*w);
-	console.log(ex,ds,w,delta);
 	return delta<compThresh;;
 }
 function getNumExcess(g,s){
@@ -58,7 +57,6 @@ function getNumExcess(g,s){
 		larger = s.innovNums;
 		max = g.innovNums[g.innovNums.length-1];
 	}
-	console.log(larger,max);
 	var numEx = larger.length-1-larger.findIndex(function(n){return n>=max});
 	return numEx;
 }
