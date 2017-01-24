@@ -20,20 +20,25 @@ specs.forEach(function(s){
 	//console.log(s.calcTotalFitness());
 });
 breed(generation[0],generation[1]);
-var it = 0;
+var specIt = 0;
+var orgIt = 0;
 $("#left").click(function(){
-	if(--it<0)
-		it=generation.length-1;
-	drawOrg(generation[it]);
-	//console.log(specs[generation[it].species-1])
-	$("#org").text("Species: " + generation[it].species + " | Organism: " + specs[generation[it].species-1].genomes.indexOf(generation[it]));
+	if(--orgIt<0){
+		if(--specIt<0)
+			specIt = specs.length-1;
+		orgIt = specs[specIt].genomes.length-1;
+	}
+	drawOrg(specs[specIt].genomes[orgIt]);
+	$("#org").text("Species: " + (specIt+1) + " | Organism: " + (orgIt+1));
 });
 $("#right").click(function(){
-	if(++it>generation.length)
-		it=0;
-	drawOrg(generation[it]);
-	//console.log(specs[generation[it].species-1])
-	$("#org").text("Species: " + generation[it].species + " | Organism: " + specs[generation[it].species-1].genomes.indexOf(generation[it]));
+	if(++orgIt>=specs[specIt].genomes.length){
+		if(++specIt>=specs.length)
+			specIt = 0;
+		orgIt = 0;
+	}
+	drawOrg(specs[specIt].genomes[orgIt]);
+	$("#org").text("Species: " + (specIt+1) + " | Organism: " + (orgIt+1));
 });
 
 
