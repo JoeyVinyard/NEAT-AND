@@ -89,8 +89,13 @@ var organism = {
 		this.innovNums.push(c.innovNum);
 		this.connGenes.push(c);
 	},
+	createOldConn: function(c){
+		globInnovNum--;
+		createNewConn(c.in.id,c.out.id);
+		this.connGenes[this.connGenes.length-1].innovNum=c.innovNum;
+	},
 	//@TODO: Make sure that the anti duplicate works
-	createNewNodeByType(t){
+	createNewNodeByType: function(t){
 		this.createNewNode(this.nodeGenes.length+1,t);
 	},
 	createNewNode: function(i,t){
