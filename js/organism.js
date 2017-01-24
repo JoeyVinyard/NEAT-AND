@@ -139,7 +139,8 @@ var organism = {
 	},
 	generateNewNode: function(){
 		var c = this.connGenes[Math.floor(Math.random()*this.connGenes.length)];
-		this.createNewNode("hidden");
+		this.createNewNodeByType("hidden");
+		console.log(this.nodeGenes);
 		c.disabled=true;
 		this.createNewConn(c.in.id,this.hiddens[this.hiddens.length-1].id);
 		this.createNewConn(this.hiddens[this.hiddens.length-1].id,c.out.id);
@@ -162,7 +163,7 @@ var organism = {
 				});
 			}
 		}
-		if(r<=.95){
+		if(r<=.05){
 			console.log("new conn");
 			this.generateNewConn();
 		}
