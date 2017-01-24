@@ -64,6 +64,7 @@ var organism = {
 		this.outputs=[];
 	},
 	createNewConn: function(i,o){
+		var dup=false;
 		console.log(this.nodeGenes);
 		if(this.nodeGenes[i-1]==undefined){
 			console.log("The input was not there");
@@ -74,12 +75,15 @@ var organism = {
 			this.createNewNode(o,"hidden");
 		}
 		else{
+			console.log(this.nodeGenes[o-1]);
 			this.nodeGenes[o-1].inputs.forEach(function(n){
 				if(n.in.id==i){
-					return;
+					dup=true;
 				}
 			});
 		}
+		if(dup)
+			return;
 		var c = Object.create(connGene);
 		c.innovNum=globInnovNum++;
 		c.in = this.nodeGenes[i-1];
@@ -115,19 +119,22 @@ var organism = {
 	generateNewConn: function(){
 		var input;
 		var output;
-		if(Math.random()>=.5){
-			input = this.inputs[Math.floor(Math.random()*this.inputs.length)];
-		}else{
-			input = this.hiddens[Math.floor(Math.random()*this.hiddens.length)];
-		}
-		if(Math.random()>=.5){
-			output = this.outputs[Math.floor(Math.random()*this.outputs.length)];
-		}else{
-			output = this.hiddens[Math.floor(Math.random()*this.hiddens.length)];
-		}
-		if(input==undefined||output==undefined){
-			return;
-		}
+		do{
+			if(Math.random()>=.5){
+				input = this.inputs[Math.floor(Math.random()*this.inputs.length)];
+			}else{
+				input = this.hiddens[Math.floor(Math.random()*this.hiddens.length)];
+			}
+			if(Math.random()>=.5){
+				output = this.outputs[Math.floor(Math.random()*this.outputs.length)];
+			}else{
+				output = this.hiddens[Math.floor(Math.random()*this.hiddens.length)];
+			}
+			if(input==undefined||output==undefined){
+				return;
+			}
+		}while(input.id==output.id);
+		console.log(input.id,output.id);
 		this.createNewConn(input.id,output.id);
 	},
 	generateNewNode: function(){
@@ -155,7 +162,7 @@ var organism = {
 				});
 			}
 		}
-		if(r<=.05){
+		if(r<=.95){
 			console.log("new conn");
 			this.generateNewConn();
 		}

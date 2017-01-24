@@ -15,9 +15,9 @@ generation[1].createNewConn(4,3);
 generation[1].connGenes[generation[1].connGenes.length-1].innovNum = 5;
 generation[1].innovNums[generation[1].innovNums.length-1] = 5;
 speciate(generation);
-console.log(specs);
+//console.log(specs);
 specs.forEach(function(s){
-	console.log(s.calcTotalFitness());
+	//console.log(s.calcTotalFitness());
 });
 breed(generation[0],generation[1]);
 var it = 0;
@@ -25,14 +25,14 @@ $("#left").click(function(){
 	if(--it<0)
 		it=generation.length-1;
 	drawOrg(generation[it]);
-	console.log(specs[generation[it].species-1])
+	//console.log(specs[generation[it].species-1])
 	$("#org").text("Species: " + generation[it].species + " | Organism: " + specs[generation[it].species-1].genomes.indexOf(generation[it]));
 });
 $("#right").click(function(){
 	if(++it>generation.length)
 		it=0;
 	drawOrg(generation[it]);
-	console.log(specs[generation[it].species-1])
+	//console.log(specs[generation[it].species-1])
 	$("#org").text("Species: " + generation[it].species + " | Organism: " + specs[generation[it].species-1].genomes.indexOf(generation[it]));
 });
 
@@ -65,4 +65,4 @@ $("#right").click(function(){
 // orgTwo.connGenes[1].innovNum=5;
 // orgTwo.innovNums.push(5);
 
-// console.log(calcCompatibility(org,orgTwo));
+// //console.log(calcCompatibility(org,orgTwo));

@@ -23,7 +23,7 @@ function speciate(genomes){
 					found = true;
 				}
 				else if(calcCompatibility(g,s.repGenome)){
-					console.log("compatible");
+					//console.log("compatible");
 					s.genomes.push(g);
 					g.species = specs.indexOf(s)+1;
 					found = true;
@@ -85,15 +85,15 @@ function getWeightDiff(g,s){
 	var numMatching = 0;
 	var totDif = 0;
 	var match = 0;
-	console.log(a,b);
+	//console.log(a,b);
 	for(var i=0;i<a.length;i++){
 		match = b.findIndex(function(n){return n==a[i]});
-		console.log(match);
+		//console.log(match);
 		if(match!=-1){
 			numMatching++;
 			totDif+=Math.abs(Math.abs(g.connGenes[i].weight)-Math.abs(s.connGenes[match].weight));
 		}
 	}
-	console.log(totDif,numMatching);
+	//console.log(totDif,numMatching);
 	return totDif/numMatching;
 }
