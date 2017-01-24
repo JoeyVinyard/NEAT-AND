@@ -7,6 +7,15 @@ var eCo = 1;
 var dCo = 1;
 var wCo = 0.4;
 
+function assignMaxes(){
+	var totFit = 0;
+	specs.forEach(function(s){
+		totFit+=s.fitness;
+	});
+	specs.forEach(function(s){
+		s.maxSize = Math.floor((s.fitness/totFit)*150);
+	});
+}
 function speciate(genomes){
 	genomes.forEach(function(g){
 		var found = false;
@@ -36,6 +45,10 @@ function speciate(genomes){
 			specs[specs.length-1].genomes.push(g);
 			g.species = specs.length;
 		}
+	});
+	specs.forEach(function(s){
+		if(s.genomes.length==0)
+			specs.splice(specs.indexOf(s),1);
 	});
 }
 function calcCompatibility(g,s){

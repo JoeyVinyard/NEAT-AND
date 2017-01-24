@@ -22,6 +22,7 @@ var nodeGene = {
 	x: 0,
 	y: 0,
 	inputs: null,
+	tot: 0,
 	createInputs: function(){
 		this.inputs = [];
 	},
@@ -31,18 +32,18 @@ var nodeGene = {
 	},
 	getSigmoid: function(){
 		if(this.type == "input"){
-			displaySigTot(this.inputs[0],this.x,this.y);
-			return this.inputs[0];
+			console.log("yo",this.inputs[0]);
+			this.tot = this.inputs[0];
+		}else{
+			var sum = 0;
+			this.inputs.forEach(function(i){
+				if(!i.disabled){
+					sum+=i.getWeightedValue();
+				}
+			});
+			this.tot = Math.floor((1/(1+Math.exp(-1*sum)))*1000)/1000;//Calculates Sigmoid and cuts off at 3 decimals
 		}
-		var sum = 0;
-		this.inputs.forEach(function(i){
-			if(!i.disabled){
-				sum+=i.getWeightedValue();
-			}
-		});
-		var tot = Math.floor((1/(1+Math.exp(-1*sum)))*1000)/1000;//Calculates Sigmoid and cuts off at 3 decimals
-		displaySigTot(tot,this.x,this.y);
-		return tot;
+		return this.tot;
 	}
 }
 
@@ -139,6 +140,9 @@ var organism = {
 	},
 	generateNewNode: function(){
 		var c = this.connGenes[Math.floor(Math.random()*this.connGenes.length)];
+		if(c == undefined){
+			return;
+		}
 		this.createNewNodeByType("hidden");
 		console.log(this.nodeGenes);
 		c.disabled=true;

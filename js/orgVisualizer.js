@@ -67,11 +67,12 @@ function drawOrg(o){
 		ctx.font = "12px Arial";
 		ctx.fillText(n.id,n.x-3,n.y+4);
 		ctx.fillStyle = "Black";
+		displaySigTot(n);
 	});
 }
-function displaySigTot(tot,x,y){
+function displaySigTot(n){
 	ctx.fillStyle = "rgb(125,125,125)";
 	ctx.font = "12px Arial";
-	ctx.fillText(tot,x-10,y-15);
+	ctx.fillText(n.tot,n.x-10,n.y-15);
 	ctx.fillStyle = "Black";
 }

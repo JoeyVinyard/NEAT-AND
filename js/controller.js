@@ -1,25 +1,20 @@
 var generation = [];
-for(var i = 0; i < 20; i++){
+for(var i = 0; i < 150; i++){
 	var org = Object.create(organism);
 	org.init();
 	org.createBlank(2,1);
 	generation.push(org);
 }
-generation[0].createNewConn(1,4);
-generation[0].connGenes[generation[0].connGenes.length-1].innovNum = 3;
-generation[0].innovNums[generation[0].innovNums.length-1] = 3;
-generation[1].createNewConn(1,4);
-generation[1].connGenes[generation[1].connGenes.length-1].innovNum = 3;
-generation[1].innovNums[generation[1].innovNums.length-1] = 3;
-generation[1].createNewConn(4,3);
-generation[1].connGenes[generation[1].connGenes.length-1].innovNum = 5;
-generation[1].innovNums[generation[1].innovNums.length-1] = 5;
 speciate(generation);
 //console.log(specs);
 specs.forEach(function(s){
-	//console.log(s.calcTotalFitness());
+	console.log(s.calcTotalFitness());
 });
-breed(generation[0],generation[1]);
+assignMaxes();
+
+
+
+
 var specIt = 0;
 var orgIt = 0;
 $("#left").click(function(){
@@ -39,6 +34,10 @@ $("#right").click(function(){
 	}
 	drawOrg(specs[specIt].genomes[orgIt]);
 	$("#org").text("Species: " + (specIt+1) + " | Organism: " + (orgIt+1));
+});
+$("#genbut").click(function(){
+	runBreeding(specs);
+	assignMaxes();
 });
 
 

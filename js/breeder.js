@@ -1,3 +1,15 @@
+function runBreeding(species){
+	var newGenomes = [];
+	species.forEach(function(s){
+		s.repGenome = s.genomes[Math.floor(Math.random()*s.genomes.length)];
+		s.genomes.splice(s.genomes.length/2);
+		for(var i=0;i<s.maxSize;i++){
+			newGenomes.push(breed(s.genomes[Math.floor(Math.random()*s.genomes.length)],s.genomes[Math.floor(Math.random()*s.genomes.length)]));
+		}
+		s.genomes = [];
+	});
+	speciate(newGenomes);
+}
 function breed(m,f){
 	var child = Object.create(organism);
 	child.init();
@@ -26,5 +38,5 @@ function breed(m,f){
 		}
 	});
 	child.runMutations();
-	drawOrg(child);
+	return child;
 }
