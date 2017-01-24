@@ -11,6 +11,9 @@ generation[0].innovNums[generation[0].innovNums.length-1] = 3;
 generation[1].createNewConn(1,4);
 generation[1].connGenes[generation[1].connGenes.length-1].innovNum = 3;
 generation[1].innovNums[generation[1].innovNums.length-1] = 3;
+generation[1].createNewConn(4,3);
+generation[1].connGenes[generation[1].connGenes.length-1].innovNum = 5;
+generation[1].innovNums[generation[1].innovNums.length-1] = 5;
 speciate(generation);
 console.log(specs);
 specs.forEach(function(s){

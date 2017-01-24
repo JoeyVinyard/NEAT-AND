@@ -91,7 +91,7 @@ var organism = {
 	},
 	createOldConn: function(c){
 		globInnovNum--;
-		createNewConn(c.in.id,c.out.id);
+		this.createNewConn(c.in.id,c.out.id);
 		this.connGenes[this.connGenes.length-1].innovNum=c.innovNum;
 	},
 	//@TODO: Make sure that the anti duplicate works
@@ -171,7 +171,8 @@ var organism = {
 		}
 		return this.outputs[0].getSigmoid();
 	},
-	calcFitness: function(sensors, expected){
+	calcFitness: function(sensors){
+		var expected = sensors[0]^sensors[1];
 		var output = this.giveInputs(sensors);
 		console.log(expected,output);
 		this.fitness = 1/Math.abs(expected-output);

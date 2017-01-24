@@ -2,12 +2,13 @@ function breed(m,f){
 	var child = Object.create(organism);
 	child.init();
 	child.createBlank(2,1);
-	var fit = m;
-	var lfit = f;
+	var fit = f;
+	var lfit = m;
 	if(m.calcFitness(getRandomCase())<f.calcFitness(getRandomCase())){
 		fit=f;
 		lfit=m;
 	}
+	console.log(fit,lfit);
 	var matching = [];
 	fit.innovNums.forEach(function(n,i){
 		if(lfit.innovNums.includes(n)){
@@ -20,6 +21,10 @@ function breed(m,f){
 				child.createOldConn(c);
 			else
 				child.createOldConn(lfit.connGenes.find(function(c){return c.innovNum == fit.innovNums[i]}));
+		}else{
+			child.createOldConn(c);
 		}
-	})
+	});
+	child.runMutations();
+	drawOrg(child);
 }

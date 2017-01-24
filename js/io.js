@@ -3,7 +3,7 @@ function throwErrorMessage(loc,mes){
 }
 function getRandomCase(){
 	var ins = [];
-	ins.push(Math.floor(Math.random()*2+1));
-	ins.push(Math.floor(Math.random()*2+1));
+	ins.push(Math.floor(Math.random()*2));
+	ins.push(Math.floor(Math.random()*2));
 	return ins;
 }
