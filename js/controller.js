@@ -11,7 +11,11 @@ specs.forEach(function(s){
 	console.log(s.calcTotalFitness());
 });
 assignMaxes();
-
+for(var i=0;i<200;i++){
+	runBreeding(specs);
+	assignMaxes();
+}
+console.log("done");
 
 
 
@@ -36,8 +40,11 @@ $("#right").click(function(){
 	$("#org").text("Species: " + (specIt+1) + " | Organism: " + (orgIt+1));
 });
 $("#genbut").click(function(){
+	specIt=0;
+	orgIt=0;
 	runBreeding(specs);
 	assignMaxes();
+	//console.log("done");
 });
 
 

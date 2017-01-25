@@ -16,11 +16,11 @@ function breed(m,f){
 	child.createBlank(2,1);
 	var fit = f;
 	var lfit = m;
-	if(m.calcFitness(getRandomCase())<f.calcFitness(getRandomCase())){
+	if(m.fitness<f.fitness){
 		fit=f;
 		lfit=m;
 	}
-	console.log(fit,lfit);
+	//console.log(fit,lfit);
 	var matching = [];
 	fit.innovNums.forEach(function(n,i){
 		if(lfit.innovNums.includes(n)){
@@ -38,5 +38,6 @@ function breed(m,f){
 		}
 	});
 	child.runMutations();
+	child.calcFitness(getRandomCase());
 	return child;
 }
