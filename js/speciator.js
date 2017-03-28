@@ -1,22 +1,40 @@
 var specs = [];
 
-var compThresh = 3;
+var bestOrg;
+
+var compThresh = 5;
 var sizeThresh = 20;
 
 var eCo = 1;
 var dCo = 1;
-var wCo = 0.4;
+var wCo = 0.2;
 
 function assignMaxes(){
 	var totFit = 0;
+	//console.log(specs);
 	specs.forEach(function(s){
-		totFit+=s.fitness;
+		if(s.genomes.length==0||s.fitness==NaN){
+			//console.log("Removing species: ",specs.indexOf(s));
+			specs.splice(specs.indexOf(s),1);
+		}else{
+			totFit+=s.fitness;
+		}	
 	});
 	specs.forEach(function(s){
 		s.maxSize = Math.floor((s.fitness/totFit)*150);
+		if(s.maxSize == NaN)
+			s.maxSize = 1;
+		//console.log(s.maxSize,s.fitness,totFit);
 	});
 }
 function speciate(genomes){
+	//console.log(genomes);
+	bestOrg = genomes[0];
+	for(var i = 0;i<genomes.length;i++){
+		if(genomes[i].fitness>bestOrg.fitness)
+			bestOrg=genomes[i];
+	}
+	console.log("Best organism: ",bestOrg.fitness);
 	genomes.forEach(function(g){
 		var found = false;
 		if(specs.length==0){
@@ -32,7 +50,6 @@ function speciate(genomes){
 					found = true;
 				}
 				else if(calcCompatibility(g,s.repGenome)){
-					//console.log("compatible");
 					s.genomes.push(g);
 					g.species = specs.indexOf(s)+1;
 					found = true;
@@ -43,6 +60,7 @@ function speciate(genomes){
 			specs.push(Object.create(species));
 			specs[specs.length-1].init();
 			specs[specs.length-1].genomes.push(g);
+			specs[specs.length-1].repGenome = g;
 			g.species = specs.length;
 		}
 	});
@@ -98,15 +116,12 @@ function getWeightDiff(g,s){
 	var numMatching = 0;
 	var totDif = 0;
 	var match = 0;
-	//console.log(a,b);
 	for(var i=0;i<a.length;i++){
 		match = b.findIndex(function(n){return n==a[i]});
-		//console.log(match);
 		if(match!=-1){
 			numMatching++;
 			totDif+=Math.abs(Math.abs(g.connGenes[i].weight)-Math.abs(s.connGenes[match].weight));
 		}
 	}
-	//console.log(totDif,numMatching);
 	return totDif/numMatching;
 }

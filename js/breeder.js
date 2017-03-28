@@ -2,7 +2,7 @@ function runBreeding(species){
 	var newGenomes = [];
 	species.forEach(function(s){
 		s.repGenome = s.genomes[Math.floor(Math.random()*s.genomes.length)];
-		s.genomes.splice(s.genomes.length/2);
+		s.genomes.splice(s.genomes.length/2+1);
 		for(var i=0;i<s.maxSize;i++){
 			newGenomes.push(breed(s.genomes[Math.floor(Math.random()*s.genomes.length)],s.genomes[Math.floor(Math.random()*s.genomes.length)]));
 		}
@@ -20,7 +20,6 @@ function breed(m,f){
 		fit=f;
 		lfit=m;
 	}
-	//console.log(fit,lfit);
 	var matching = [];
 	fit.innovNums.forEach(function(n,i){
 		if(lfit.innovNums.includes(n)){
@@ -29,15 +28,17 @@ function breed(m,f){
 	});
 	fit.connGenes.forEach(function(c,i){
 		if(matching.includes(c)){
-			if(Math.random()<.75)
+			if(Math.random()<.5)
 				child.createOldConn(c);
-			else
+			else{
+				//console.log("Input num is:",i,fit);
 				child.createOldConn(lfit.connGenes.find(function(c){return c.innovNum == fit.innovNums[i]}));
+			}
 		}else{
 			child.createOldConn(c);
 		}
 	});
 	child.runMutations();
-	child.calcFitness(getRandomCase());
+	child.calcFitness();
 	return child;
 }

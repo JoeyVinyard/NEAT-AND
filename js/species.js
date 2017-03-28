@@ -9,7 +9,7 @@ var species = {
 	calcTotalFitness: function(){
 		var sum = 0;
 		this.genomes.forEach(function(g){
-			sum+=g.calcFitness(getRandomCase());
+			sum+=g.fitness;
 		});
 		this.genomes.sort(function(a,b){
 			if(a.fitness<b.fitness)
