@@ -2,12 +2,12 @@ var specs = [];
 
 var bestOrg;
 
-var compThresh = 5;
+var compThresh = 3;
 var sizeThresh = 20;
 
 var eCo = 1;
 var dCo = 1;
-var wCo = 0.2;
+var wCo = .2;
 
 function assignMaxes(){
 	var totFit = 0;

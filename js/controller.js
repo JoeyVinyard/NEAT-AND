@@ -45,7 +45,7 @@ $("#genbut").click(function(){
 $("#bestbut").click(function(){
 	drawOrg(bestOrg);
 });
-for(var i=0;i<1000;i++){
+for(var i=0;i<50;i++){
 	console.log(i);
 	runBreeding(specs);
 	specs.forEach(function(s){

@@ -3,7 +3,10 @@ function runBreeding(species){
 	species.forEach(function(s){
 		s.repGenome = s.genomes[Math.floor(Math.random()*s.genomes.length)];
 		s.genomes.splice(s.genomes.length/2+1);
-		for(var i=0;i<s.maxSize;i++){
+		for(var i=0;i<s.genomes.length;i++){
+			newGenomes.push(s.genomes[i]);
+		}
+		for(var i=0;i<s.maxSize/2;i++){
 			newGenomes.push(breed(s.genomes[Math.floor(Math.random()*s.genomes.length)],s.genomes[Math.floor(Math.random()*s.genomes.length)]));
 		}
 		s.genomes = [];

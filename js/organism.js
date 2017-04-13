@@ -243,5 +243,7 @@ var organism = {
 		for(var i=0;i<numOutputs;i++){
 			this.createNewNodeByType("output");
 		}
+		this.createNewConn(1,3);
+		this.createNewConn(2,3);
 	}
 }
