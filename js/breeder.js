@@ -1,24 +1,39 @@
+var stagNum = 0;
 function runBreeding(species){
+	if(stagNum>=100){
+		species.splice(2);
+		assignMaxes();
+		console.log("Fixing Stagnation",species);
+		stagNum=0;
+	}
+	species.forEach(function(s){
+		if(s.genomes.length==0){
+			species.splice(species.indexOf(s),1);
+		}
+	});
 	var newGenomes = [];
 	species.forEach(function(s){
 		s.repGenome = s.genomes[Math.floor(Math.random()*s.genomes.length)];
 		s.genomes.splice(s.genomes.length/2+1);
-		for(var i=0;i<s.genomes.length;i++){
-			newGenomes.push(s.genomes[i]);
-		}
-		for(var i=0;i<s.maxSize/2;i++){
-			newGenomes.push(breed(s.genomes[Math.floor(Math.random()*s.genomes.length)],s.genomes[Math.floor(Math.random()*s.genomes.length)]));
+		for(var i=0;i<s.maxSize;i++){
+			var m=s.genomes[Math.floor(Math.random()*s.genomes.length)];
+			var f=s.genomes[Math.floor(Math.random()*s.genomes.length)];
+			if(m==undefined||f==undefined)
+				break;
+			newGenomes.push(breed(m,f));
 		}
 		s.genomes = [];
 	});
+	//console.log("New Genomes " ,newGenomes);
 	speciate(newGenomes);
 }
 function breed(m,f){
 	var child = Object.create(organism);
 	child.init();
-	child.createBlank(2,1);
+	child.createBlank(3,1);
 	var fit = f;
 	var lfit = m;
+	//console.log(m,f);
 	if(m.fitness<f.fitness){
 		fit=f;
 		lfit=m;

@@ -1,5 +1,10 @@
 function drawOrg(o){
+	drawOrg(o,null);
+}
+function drawOrg(o,inputs){
 	clear();
+	if(inputs!=null)
+		o.giveInputs(inputs);
 	var inNodes = [340];
 	var hdNodes = [200];
 	var otNodes = [60];

@@ -7,13 +7,13 @@ var sizeThresh = 20;
 
 var eCo = 1;
 var dCo = 1;
-var wCo = .2;
+var wCo = .4;
 
 function assignMaxes(){
 	var totFit = 0;
 	//console.log(specs);
 	specs.forEach(function(s){
-		if(s.genomes.length==0||s.fitness==NaN){
+		if(s.genomes.length==0||isNaN(s.fitness)){
 			//console.log("Removing species: ",specs.indexOf(s));
 			specs.splice(specs.indexOf(s),1);
 		}else{
@@ -22,10 +22,21 @@ function assignMaxes(){
 	});
 	specs.forEach(function(s){
 		s.maxSize = Math.floor((s.fitness/totFit)*150);
-		if(s.maxSize == NaN)
+		if(isNaN(s.maxSize))
 			s.maxSize = 1;
 		//console.log(s.maxSize,s.fitness,totFit);
 	});
+	var temp = 1;
+	while(temp!=null){
+		temp = null;
+		for(var i=1;i<specs.length;i++){
+			if(specs[i].fitness>specs[i-1].fitness){
+				temp = specs[i];
+				specs[i]=specs[i-1];
+				specs[i-1]=temp;
+			}
+		}
+	}
 }
 function speciate(genomes){
 	//console.log(genomes);
@@ -34,7 +45,7 @@ function speciate(genomes){
 		if(genomes[i].fitness>bestOrg.fitness)
 			bestOrg=genomes[i];
 	}
-	console.log("Best organism: ",bestOrg.fitness);
+	//console.log("Best organism: ",bestOrg.fitness);
 	genomes.forEach(function(g){
 		var found = false;
 		if(specs.length==0){
@@ -44,12 +55,14 @@ function speciate(genomes){
 		specs.forEach(function(s){
 			if(!found){
 				if(s.repGenome == null){
+				//	console.log("First species");
 					s.genomes.push(g);
 					s.repGenome=g;
 					g.species = 1;
 					found = true;
 				}
 				else if(calcCompatibility(g,s.repGenome)){
+					//console.log("Adding to species");
 					s.genomes.push(g);
 					g.species = specs.indexOf(s)+1;
 					found = true;
@@ -57,6 +70,7 @@ function speciate(genomes){
 			}
 		});
 		if(!found){
+			//console.log("Creating new species");
 			specs.push(Object.create(species));
 			specs[specs.length-1].init();
 			specs[specs.length-1].genomes.push(g);
@@ -65,8 +79,9 @@ function speciate(genomes){
 		}
 	});
 	specs.forEach(function(s){
-		if(s.genomes.length==0)
+		if(s.genomes.length==0){
 			specs.splice(specs.indexOf(s),1);
+		}
 	});
 }
 function calcCompatibility(g,s){
@@ -79,6 +94,7 @@ function calcCompatibility(g,s){
 	var ds = getNumDisjoint(g,s);
 	var w = getWeightDiff(g,s);
 	var delta = (eCo*(ex/n))+(dCo*(ds/n))+(wCo*w);
+	//console.log("Excess: ", ex, "Disjoint: ", ds, "Weight: ", w, "Delta: ", delta);
 	return delta<compThresh;;
 }
 function getNumExcess(g,s){
