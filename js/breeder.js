@@ -30,7 +30,7 @@ function runBreeding(species){
 function breed(m,f){
 	var child = Object.create(organism);
 	child.init();
-	child.createBlank(3,1);
+	child.createBlank(2,1);
 	var fit = f;
 	var lfit = m;
 	//console.log(m,f);

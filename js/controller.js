@@ -3,7 +3,7 @@ var bestOrgOverall;
 for(var i = 0; i < 150; i++){
 	var org = Object.create(organism);
 	org.init();
-	org.createBlank(3,1);
+	org.createBlank(2,1);
 	org.calcFitness();
 	generation.push(org);
 }
@@ -37,49 +37,43 @@ $("#right").click(function(){
 	$("#org").text("Species: " + (specIt+1) + " | Organism: " + (orgIt+1));
 });
 $("#genbut").click(function(){
-	specIt=0;
-	orgIt=0;
-	for(var i = 0;i<20;i++){
-		runBreeding(specs);
-		specs.forEach(function(s){
-			s.calcTotalFitness();
-		});
-		assignMaxes();
-		if(bestOrgOverall==null||bestOrgOverall.fitness<bestOrg.fitness){
-			console.log("\n\n\nNEWBEST\n\n");
-			stagNum=0;
-			bestOrgOverall=bestOrg;
-		}
-		stagNum++;
-		console.log("BOO:",bestOrgOverall.fitness, "BO:",bestOrg.fitness);
-	}
+	gen();
 });
+$("#toggleGen").click(function(){
+	keepGen=!keepGen;
+	if(keepGen)
+		gen();
+})
 $("#bestbut00").click(function(){
-	drawOrg(bestOrgOverall,[0,0,1]);
+	drawOrg(bestOrgOverall,[0,0]);
 });
 $("#bestbut01").click(function(){
-	drawOrg(bestOrgOverall,[0,1,1]);
+	drawOrg(bestOrgOverall,[0,1]);
 });
 $("#bestbut10").click(function(){
-	drawOrg(bestOrgOverall,[1,0,1]);
+	drawOrg(bestOrgOverall,[1,0]);
 });
 $("#bestbut11").click(function(){
-	drawOrg(bestOrgOverall,[1,1,1]);
+	drawOrg(bestOrgOverall,[1,1]);
 });
-// do{
-// 	specIt=0;
-// 	orgIt=0;
-// 	runBreeding(specs);
-// 	specs.forEach(function(s){
-// 		s.calcTotalFitness();
-// 	});
-// 	assignMaxes();
-// }while(bestOrg.fitness<.85);
-// for(var i=0;i<200;i++){
-// 	console.log(i);
-// 	runBreeding(specs);
-// 	specs.forEach(function(s){
-// 		s.calcTotalFitness();
-// 	});
-// 	assignMaxes();
-// }
+
+var keepGen = false;
+
+var gen = function(){
+	specIt=0;
+	orgIt=0;
+	runBreeding(specs);
+	specs.forEach(function(s){
+		s.calcTotalFitness();
+	});
+	assignMaxes();
+	if(bestOrgOverall==null||bestOrgOverall.fitness<bestOrg.fitness){
+		console.log("\n\n\nNEWBEST\n\n");
+		stagNum=0;
+		bestOrgOverall=bestOrg;
+	}
+	stagNum++;
+	console.log("BOO:",bestOrgOverall.fitness, "BO:",bestOrg.fitness);
+	if(keepGen)
+		window.setTimeout(gen, 50);
+}

@@ -236,15 +236,17 @@ var organism = {
 	},
 	calcFitness: function(){
 		var tot = 0;
-		var cases = [[0,0,1],[0,1,1],[1,0,1],[1,1,1]];
+		var cases = [[0,0],[0,1],[1,0],[1,1]];
 		for(var i = 0;i<4;i++){
-			var expected = cases[i][0]^cases[i][1];
-			//console.log(this);
+			var expected = cases[i][0]&&cases[i][1];
 			var output = this.giveInputs(cases[i]);
 			tot += ((1/(1+Math.abs(expected-output)))*2-1);
 		}
 		this.fitness=(tot/4);
-		this.fitness/=(1+(this.nodeGenes.length/50));
+		if(this.nodeGenes.length>5){
+			console.warn("Lowering fitness because too many nodes");
+			this.fitness/=(this.nodeGenes.length-4);
+		}
 		return (this.fitness);
 	},
 	createBlank: function(numInputs, numOutputs){
@@ -254,7 +256,7 @@ var organism = {
 		for(var i=0;i<numOutputs;i++){
 			this.createNewNodeByType("output");
 		}
-		this.createNewConn(1,4,1,1);
-		this.createNewConn(2,4,1,2);
+		this.createNewConn(1,3,1,1);
+		this.createNewConn(2,3,1,2);
 	}
 }
